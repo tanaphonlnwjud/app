@@ -31,7 +31,11 @@ class ScheduleService {
   }
 
   Future<void> addSchedule(ScheduleModel schedule) {
-    return _collection.add(schedule.toMap());
+    return _collection.add(schedule.toJson());
+  }
+
+  Future<void> updateSchedule(String id, ScheduleModel schedule) async{
+    return await _collection.doc(id).update(schedule.toJson());
   }
 
   Future<void> deleteSchedule(String id) {

@@ -3,11 +3,13 @@ import 'package:nisit_hub/pages/AI_page.dart';
 import 'package:nisit_hub/pages/Building_page.dart';
 import 'package:nisit_hub/pages/community_page.dart';
 import 'package:nisit_hub/pages/profile_page.dart';
+import 'package:nisit_hub/pages/profiledev_page.dart';
 import '../services/authentication_service.dart';
 import '../models/schedule_model.dart';
 import '../services/schedule_service.dart';
 import 'login_page.dart';
 import 'schedule_page.dart';
+import 'homeworknoti_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -20,13 +22,19 @@ class HomePage extends StatelessWidget {
         title: Row(
           children: [
             Image.asset(
-              'assets/images/logo.png',
-              width: 44,
-              height: 44,
+              'assets/icon/logo.png',
+              width: 50,
+              height: 55,
               fit: BoxFit.contain,
             ),
-            const SizedBox(width: 8),
-            const Text('Nisit Hub'),
+            const SizedBox(width: 3),
+            const Text(
+              'Nisit Hub',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
         actions: [
@@ -40,6 +48,13 @@ class HomePage extends StatelessWidget {
               if (page == 'AI') {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const AIPage()),
+                );
+                return;
+              }
+
+               if (page == 'งานที่ต้องส่ง') {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const HomeworkNotiPage()),
                 );
                 return;
               }
@@ -65,6 +80,13 @@ class HomePage extends StatelessWidget {
                 return;
               }
 
+              if (page == 'โปรไฟล์ผู้สร้าง') {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const DevProfilePage()),
+                );
+                return;
+              }
+
               if (page == 'Logout') {
                 AuthenticationService().logout().then((_) {
                   if (!context.mounted) return;
@@ -76,6 +98,12 @@ class HomePage extends StatelessWidget {
                 return;
               }
 
+              if (page == 'About') {
+                _showUnavailable(context, "เกี่ยวกับแอป");
+                return;
+              }
+
+
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('$page ยังไม่พร้อมใช้งาน')),
               );
@@ -86,6 +114,8 @@ class HomePage extends StatelessWidget {
               PopupMenuItem(value: 'ตึกเรียน', child: Text('ตึกเรียน')),
               PopupMenuItem(value: 'ชุมชน', child: Text('ชุมชน')),
               PopupMenuItem(value: 'โปรไฟล์', child: Text('โปรไฟล์')),
+              PopupMenuItem(value: 'โปรไฟล์ผู้สร้าง', child: Text('โปรไฟล์ผู้สร้าง')),  
+              PopupMenuItem(value: 'About', child: Text('เกี่ยวกับแอป')),
               PopupMenuItem(value: 'Logout', child: Text('ออกจากระบบ')),
             ],
           ),
@@ -171,7 +201,9 @@ class HomePage extends StatelessWidget {
                         context,
                         'งานที่ต้องส่ง',
                         Icons.assignment_outlined,
-                        () => _showUnavailable(context, 'งานที่ต้องส่ง'),
+                        () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const HomeworkNotiPage()),
+                        ),
                       ),
                       _homeButton(
                         context,
@@ -233,7 +265,7 @@ class HomePage extends StatelessWidget {
 
   void _showUnavailable(BuildContext context, String pageName) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$pageName ยังไม่มีหน้าจอ')),
+      SnackBar(content: Text('$pageName ยังไม่พร้อมใช้งาน')),
     );
   }
 }

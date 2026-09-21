@@ -46,6 +46,28 @@ class _ScheduleCard extends StatelessWidget {
 
   final ScheduleModel schedule;
 
+  Future<bool> _showConfirmationDialog(BuildContext context) async {
+    return await showDialog<bool>(
+          context: context,
+          builder: (dialogContext) => AlertDialog(
+            title: const Text('ยืนยันการลบ'),
+            content: const Text('คุณต้องการลบรายการนี้หรือไม่?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(false),
+                child: const Text('No'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(true),
+                style: TextButton.styleFrom(foregroundColor: Colors.red),
+                child: const Text('Yes'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -60,11 +82,33 @@ class _ScheduleCard extends StatelessWidget {
           '${schedule.courseCode.isEmpty ? '' : '${schedule.courseCode} | '}${schedule.courseName}\nห้อง ${schedule.room.isEmpty ? '-' : schedule.room} | Sec ${schedule.section.isEmpty ? '-' : schedule.section}',
         ),
         isThreeLine: true,
-        trailing: IconButton(
-          icon: const Icon(Icons.delete_outline),
-          onPressed: schedule.id == null
-              ? null
-              : () => ScheduleService().deleteSchedule(schedule.id!),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.edit_outlined),
+              tooltip: 'แก้ไข',
+              onPressed: schedule.id == null
+                  ? null
+                  : () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => AddSchedulePage(schedule: schedule),
+                        ),
+                      ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete_outline),
+              tooltip: 'ลบ',
+              onPressed: schedule.id == null
+                  ? null
+                  : () async {
+                      final confirmed = await _showConfirmationDialog(context);
+                      if (confirmed) {
+                        await ScheduleService().deleteSchedule(schedule.id!);
+                      }
+                    },
+            ),
+          ],
         ),
       ),
     );
@@ -72,7 +116,9 @@ class _ScheduleCard extends StatelessWidget {
 }
 
 class AddSchedulePage extends StatefulWidget {
-  const AddSchedulePage({super.key});
+  const AddSchedulePage({super.key, this.schedule});
+
+  final ScheduleModel? schedule;
 
   @override
   State<AddSchedulePage> createState() => _AddSchedulePageState();
@@ -88,6 +134,27 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
   TimeOfDay? _startTime;
   TimeOfDay? _endTime;
   bool _saving = false;
+
+  bool get _isEditing => widget.schedule != null;
+
+  @override
+  void initState() {
+    super.initState();
+    final schedule = widget.schedule;
+    if (schedule == null) return;
+
+    _weekday = schedule.weekday;
+    _startTime = _timeOfDayFromMinutes(schedule.startMinutes);
+    _endTime = _timeOfDayFromMinutes(schedule.endMinutes);
+    _courseName.text = schedule.courseName;
+    _courseCode.text = schedule.courseCode;
+    _room.text = schedule.room;
+    _section.text = schedule.section;
+  }
+
+  TimeOfDay _timeOfDayFromMinutes(int minutes) {
+    return TimeOfDay(hour: minutes ~/ 60, minute: minutes % 60);
+  }
 
   @override
   void dispose() {
@@ -128,7 +195,8 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
 
     setState(() => _saving = true);
     try {
-      await ScheduleService().addSchedule(ScheduleModel(
+      final updatedSchedule = ScheduleModel(
+        id: widget.schedule?.id,
         weekday: _weekday,
         startMinutes: _minutes(_startTime!),
         endMinutes: _minutes(_endTime!),
@@ -136,7 +204,12 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
         courseCode: _courseCode.text.trim(),
         room: _room.text.trim(),
         section: _section.text.trim(),
-      ));
+      );
+      if (_isEditing) {
+        await ScheduleService().updateSchedule(widget.schedule!.id!, updatedSchedule);
+      } else {
+        await ScheduleService().addSchedule(updatedSchedule);
+      }
       if (mounted) Navigator.of(context).pop();
     } catch (error) {
       _showMessage('บันทึกไม่สำเร็จ: $error');
@@ -152,7 +225,7 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('เพิ่มตารางเรียน')),
+      appBar: AppBar(title: Text(_isEditing ? 'แก้ไขตารางเรียน' : 'เพิ่มตารางเรียน')),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -182,7 +255,7 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
             FilledButton.icon(
               onPressed: _saving ? null : _save,
               icon: _saving ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator()) : const Icon(Icons.save),
-              label: const Text('บันทึกตารางเรียน'),
+              label: Text(_isEditing ? 'บันทึกการแก้ไข' : 'บันทึกตารางเรียน'),
             ),
           ],
         ),

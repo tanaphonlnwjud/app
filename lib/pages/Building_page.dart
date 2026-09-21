@@ -76,6 +76,30 @@ class BuildingPage extends StatelessWidget {
           'assets/images/ConvanHall.jpg',
       mapUrl: 'https://maps.app.goo.gl/24bdJFVcsm8UzCWP6',
     ),
+    BuildingInfo(
+      name: 'อาคาร 80 ปี (KH80)',
+      imageUrl:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3rFs623qLaI2S8elGti9RpDkHCcZ2C1dB1ufQdmsD9fbV67Hgx8Ie0pM&s=10',
+      mapUrl: 'https://maps.app.goo.gl/skPoBMiG7NLKaLoAA',
+    ),
+    BuildingInfo(
+      name: 'ตึกอุตสาหกรรมบริการ (ตึกรุ้ง)',
+      imageUrl:
+          'assets/images/HI.jpg',
+      mapUrl: 'https://maps.app.goo.gl/ER4wJH4ddWwPnQrp7',
+    ),
+    BuildingInfo(
+      name: 'ตึกคณะวิทยาศาสตร์การกีฬาและสุขภาพ',
+      imageUrl:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDZmzOWk47Tnd0zZ9dsO9hmaVTKoydMCG7UcxQUQvGmTAttwx6I1gafi8&s=10',
+      mapUrl: 'https://maps.app.goo.gl/W97oLgryiPjAHPSX8',
+    ),
+    BuildingInfo(
+      name: 'ตึกคณะศึกษาศาสตร์และพัฒนศาสตร์ (EDS1)',
+      imageUrl:
+          'https://scontent.fkdt2-1.fna.fbcdn.net/v/t39.30808-6/540832401_1372653871534730_5501261249277809129_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1536&ctp=s2048x1536&_nc_cat=110&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=833d8c&_nc_ohc=sEo9bWbblsIQ7kNvwHZGDeb&_nc_oc=Adq4HUEGW8UZmGHBuFb3qHdAeFcNFWB2NRJk39RDS152jhE9ffIFH0e9L8ccmbXRcCo&_nc_zt=23&_nc_ht=scontent.fkdt2-1.fna&_nc_gid=WEkmzl6s6qQnKKUzoIbxbA&_nc_ss=7b2a8&oh=00_AQJyZa5Q29I1ycJkSV3BLj8o_Q3Q-nTj8Yww8ntVEjZ3YQ&oe=6AB69951',
+      mapUrl: 'https://maps.app.goo.gl/W9vkf4pgFvaFk9FWA',
+    ),
   ];
 
   @override

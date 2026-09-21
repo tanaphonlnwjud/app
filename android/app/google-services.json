@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "721921826972",
+    "project_id": "mobileappproject-289f4",
+    "storage_bucket": "mobileappproject-289f4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721921826972:android:2a9b36e03875e698dccd59",
+        "android_client_info": {
+          "package_name": "com.example.nisit_hub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtCTzQlVE1pv0OOqmluIDIGniWKsCMmuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

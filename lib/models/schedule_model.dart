@@ -35,7 +35,7 @@ class ScheduleModel {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'weekday': weekday,
       'startMinutes': startMinutes,
