@@ -82,32 +82,26 @@ class _ScheduleCard extends StatelessWidget {
           '${schedule.courseCode.isEmpty ? '' : '${schedule.courseCode} | '}${schedule.courseName}\nห้อง ${schedule.room.isEmpty ? '-' : schedule.room} | Sec ${schedule.section.isEmpty ? '-' : schedule.section}',
         ),
         isThreeLine: true,
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.edit_outlined),
-              tooltip: 'แก้ไข',
-              onPressed: schedule.id == null
-                  ? null
-                  : () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => AddSchedulePage(schedule: schedule),
-                        ),
-                      ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.delete_outline),
-              tooltip: 'ลบ',
-              onPressed: schedule.id == null
-                  ? null
-                  : () async {
-                      final confirmed = await _showConfirmationDialog(context);
-                      if (confirmed) {
-                        await ScheduleService().deleteSchedule(schedule.id!);
-                      }
-                    },
-            ),
+        trailing: PopupMenuButton<String>(
+          tooltip: 'การดำเนินการ',
+          onSelected: (value) async {
+            if (schedule.id == null) return;
+            if (value == 'edit') {
+              await Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => AddSchedulePage(schedule: schedule),
+                ),
+              );
+              return;
+            }
+            final confirmed = await _showConfirmationDialog(context);
+            if (confirmed) {
+              await ScheduleService().deleteSchedule(schedule.id!);
+            }
+          },
+          itemBuilder: (_) => const [
+            PopupMenuItem(value: 'edit', child: Text('แก้ไข')),
+            PopupMenuItem(value: 'delete', child: Text('ลบ')),
           ],
         ),
       ),

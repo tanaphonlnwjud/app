@@ -71,7 +71,7 @@ class BuildingPage extends StatelessWidget {
       mapUrl: 'https://maps.app.goo.gl/A3Lo2Kai4hueHi7i6',
     ),
     BuildingInfo(
-      name: 'ห้องคอนเวนชั่น ม.เกษตร(กำแพงแสน)',
+      name: 'ห้องคอนเวนชั่น ม.เกษตร (กำแพงแสน)',
       imageUrl:
           'assets/images/ConvanHall.jpg',
       mapUrl: 'https://maps.app.goo.gl/24bdJFVcsm8UzCWP6',
@@ -109,11 +109,11 @@ class BuildingPage extends StatelessWidget {
       body: GridView.builder(
         padding: const EdgeInsets.all(12),
         itemCount: buildings.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 420,
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
-          childAspectRatio: 1.4,
+          childAspectRatio: 1.3,
         ),
         itemBuilder: (context, index) =>
             BuildingCard(building: buildings[index]),

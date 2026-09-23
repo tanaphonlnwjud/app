@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import '../services/authentication_service.dart';
 import '../widgets/register_form.dart';
 
@@ -59,10 +58,20 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('สมัครสมาชิก')),
+      backgroundColor: const Color(0xFFD9D9D9),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFD9D9D9),
+        foregroundColor: Colors.black,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).maybePop(),
+        ),
+        title: const Text('สมัครสมาชิก'),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.fromLTRB(18, 18, 18, 32),
           child: RegisterForm(onSubmit: _register, isLoading: _isLoading),
         ),
       ),

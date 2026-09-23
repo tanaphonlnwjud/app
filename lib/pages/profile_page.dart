@@ -113,7 +113,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('โปรไฟล์', style: TextStyle(color: Colors.black)),
+        centerTitle: true,
         actions: [
           IconButton(
             tooltip: _editing ? 'บันทึก' : 'แก้ไขโปรไฟล์',
@@ -159,7 +160,13 @@ class _ProfilePageState extends State<ProfilePage> {
     return TextFormField(
       controller: controller,
       enabled: _editing && enabled,
-      decoration: InputDecoration(labelText: label, filled: true, border: const OutlineInputBorder(borderSide: BorderSide.none)),
+      style: const TextStyle(color: Colors.black),
+      decoration: InputDecoration(
+        labelText: label,
+        filled: true,
+        labelStyle: const TextStyle(color: Colors.black),
+        border: const OutlineInputBorder(borderSide: BorderSide.none),
+      ),
       validator: (value) => label == 'First Name' && (value == null || value.trim().isEmpty) ? 'กรุณากรอกชื่อ' : null,
     );
   }
@@ -170,7 +177,13 @@ class _ProfilePageState extends State<ProfilePage> {
       enabled: _editing,
       onTap: _editing ? _pickBirthDate : null,
       controller: TextEditingController(text: _birthDate == null ? '' : DateFormat('dd/MM/yyyy').format(_birthDate!)),
-      decoration: const InputDecoration(labelText: 'Bird-date', filled: true, border: OutlineInputBorder(borderSide: BorderSide.none)),
+      style: const TextStyle(color: Colors.black),
+      decoration: const InputDecoration(
+        labelText: 'Birth-Date',
+        filled: true,
+        labelStyle: TextStyle(color: Colors.black),
+        border: OutlineInputBorder(borderSide: BorderSide.none),
+      ),
     );
   }
 }

@@ -43,7 +43,7 @@ class _DevProfilePageState extends State<DevProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('โปรไฟล์นักศึกษา'),
+        title: const Text('โปรไฟล์ผู้สร้าง'),
         centerTitle: true,
       ),
       body: Form(

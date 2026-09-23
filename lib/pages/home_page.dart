@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nisit_hub/pages/AI_page.dart';
 import 'package:nisit_hub/pages/Building_page.dart';
 import 'package:nisit_hub/pages/community_page.dart';
+import 'package:nisit_hub/pages/lost_found_page.dart';
 import 'package:nisit_hub/pages/profile_page.dart';
 import 'package:nisit_hub/pages/profiledev_page.dart';
 import '../services/authentication_service.dart';
@@ -72,6 +73,13 @@ class HomePage extends StatelessWidget {
                 );
                 return;
               }
+
+              if (page == 'ตามหาของหาย') {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const LostFoundPage()),
+                );
+                return;
+              }
               
               if (page == 'โปรไฟล์') {
                 Navigator.of(context).push(
@@ -103,6 +111,8 @@ class HomePage extends StatelessWidget {
                 return;
               }
 
+              
+
 
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('$page ยังไม่พร้อมใช้งาน')),
@@ -113,8 +123,8 @@ class HomePage extends StatelessWidget {
               PopupMenuItem(value: 'AI', child: Text('AI')),
               PopupMenuItem(value: 'ตึกเรียน', child: Text('ตึกเรียน')),
               PopupMenuItem(value: 'ชุมชน', child: Text('ชุมชน')),
-              PopupMenuItem(value: 'โปรไฟล์', child: Text('โปรไฟล์')),
-              PopupMenuItem(value: 'โปรไฟล์ผู้สร้าง', child: Text('โปรไฟล์ผู้สร้าง')),  
+              PopupMenuItem(value: 'ตามหาของหาย', child: Text('ตามหาของหาย')),
+              PopupMenuItem(value: 'โปรไฟล์ผู้สร้าง', child: Text('โปรไฟล์ผู้สร้าง')),
               PopupMenuItem(value: 'About', child: Text('เกี่ยวกับแอป')),
               PopupMenuItem(value: 'Logout', child: Text('ออกจากระบบ')),
             ],
@@ -143,13 +153,17 @@ class HomePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Row(children: [
-                        Icon(Icons.calendar_month_outlined),
-                        SizedBox(width: 6),
-                        Text("Today's Schedule", style: TextStyle(fontSize: 18)),
-                      ]),
+                      const Icon(Icons.calendar_month_outlined),
+                      const SizedBox(width: 6),
+                      const Expanded(
+                        child: Text(
+                          "Today's Schedule",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
                       IconButton(
                         tooltip: 'จัดการตารางเรียน',
                         onPressed: () => Navigator.of(context).push(
@@ -246,18 +260,20 @@ class HomePage extends StatelessWidget {
     IconData icon,
     VoidCallback onPressed,
   ) {
-    return SizedBox(
-      width: 145,
-      height: 48,
-      child: FilledButton.icon(
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minWidth: 0, maxWidth: 145),
+      child: SizedBox(
+        height: 48,
+        child: FilledButton.icon(
         onPressed: onPressed,
         icon: Icon(icon, size: 18),
         label: Text(
           label,
           maxLines: 1,
           softWrap: false,
-          overflow: TextOverflow.visible,
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(fontSize: 14),
+        ),
         ),
       ),
     );

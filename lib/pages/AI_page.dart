@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/authentication_service.dart';
 import '../services/openai_chat_service.dart';
 
 class AIPage extends StatefulWidget {
@@ -18,7 +19,32 @@ class _AIPageState extends State<AIPage> {
 			isUser: false,
 		),
 	];
+	String _fullName = '';
 	bool _isReplying = false;
+
+	@override
+	void initState() {
+		super.initState();
+		_loadUserName();
+	}
+
+	Future<void> _loadUserName() async {
+		final name = await AuthenticationService().getCurrentUserFullName();
+		if (!mounted) return;
+
+		final displayName = name.trim().isNotEmpty
+				? name.trim()
+				: AuthenticationService.userName;
+		setState(() {
+			_fullName = displayName;
+			_messages[0] = _ChatMessage(
+				text: displayName.isEmpty
+						? 'สวัสดีครับ ผมคือ Nisit Hub AI มีอะไรให้ช่วยไหมครับ'
+						: 'สวัสดีครับคุณ $displayName ผมคือ Nisit Hub AI มีอะไรให้ช่วยไหมครับ',
+				isUser: false,
+			);
+		});
+	}
 
 	@override
 	void dispose() {
@@ -38,14 +64,21 @@ class _AIPageState extends State<AIPage> {
 		});
 		_scrollToBottom();
 
-		final conversation = _messages
+		final conversation = <Map<String, String>>[
+			{
+				'role': 'system',
+				'content': _fullName.isEmpty
+						? 'ผู้ใช้กำลังสนทนากับคุณในแอป Nisit Hub'
+						: 'ผู้ใช้ชื่อ $_fullName กรุณาเรียกชื่อผู้ใช้เมื่อเหมาะสม และตอบเป็นภาษาไทย',
+			},
+			..._messages
 				.map(
 					(message) => {
 						'role': message.isUser ? 'user' : 'assistant',
 						'content': message.text,
 					},
-				)
-				.toList();
+				),
+		];
 
 		String reply;
 		try {
@@ -103,8 +136,8 @@ class _AIPageState extends State<AIPage> {
 									child: Container(
 										constraints: const BoxConstraints(maxWidth: 500),
 										margin: const EdgeInsets.only(bottom: 12),
-										padding: const EdgeInsets.symmetric(
-											horizontal: 50,
+											padding: const EdgeInsets.symmetric(
+												horizontal: 16,
 											vertical: 12,
 										),
 										decoration: BoxDecoration(
