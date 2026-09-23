@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nisit_hub/widgets/responsive_page.dart';
 
 import '../models/schedule_model.dart';
 import '../services/schedule_service.dart';
@@ -8,7 +9,7 @@ class SchedulePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ResponsiveScaffold(
       appBar: AppBar(title: const Text('ตารางเรียน')),
       body: StreamBuilder<List<ScheduleModel>>(
         stream: ScheduleService().watchSchedules(),
@@ -218,7 +219,7 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ResponsiveScaffold(
       appBar: AppBar(title: Text(_isEditing ? 'แก้ไขตารางเรียน' : 'เพิ่มตารางเรียน')),
       body: Form(
         key: _formKey,

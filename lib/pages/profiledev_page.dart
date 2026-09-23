@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nisit_hub/widgets/responsive_page.dart';
 
 class DevProfilePage extends StatefulWidget {
   const DevProfilePage({super.key});
@@ -41,7 +42,7 @@ class _DevProfilePageState extends State<DevProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ResponsiveScaffold(
       appBar: AppBar(
         title: const Text('โปรไฟล์ผู้สร้าง'),
         centerTitle: true,

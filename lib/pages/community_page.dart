@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nisit_hub/widgets/responsive_page.dart';
 import 'package:intl/intl.dart';
 
 import '../models/community_post.dart';
@@ -49,7 +50,7 @@ class _CommunityPageState extends State<CommunityPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ResponsiveScaffold(
       appBar: AppBar(title: const Text('ชุมชน')),
       body: Column(
         children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nisit_hub/widgets/responsive_page.dart';
 import 'package:nisit_hub/pages/AI_page.dart';
 import 'package:nisit_hub/pages/Building_page.dart';
 import 'package:nisit_hub/pages/community_page.dart';
@@ -17,7 +18,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ResponsiveScaffold(
       appBar: AppBar(
         titleSpacing: 0,
         title: Row(
@@ -81,7 +82,7 @@ class HomePage extends StatelessWidget {
                 return;
               }
               
-              if (page == 'โปรไฟล์') {
+              if (page == 'โปรไฟล์ของฉัน') {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const ProfilePage()),
                 );
@@ -124,6 +125,7 @@ class HomePage extends StatelessWidget {
               PopupMenuItem(value: 'ตึกเรียน', child: Text('ตึกเรียน')),
               PopupMenuItem(value: 'ชุมชน', child: Text('ชุมชน')),
               PopupMenuItem(value: 'ตามหาของหาย', child: Text('ตามหาของหาย')),
+              PopupMenuItem(value: 'โปรไฟล์ของฉัน', child: Text('โปรไฟล์ของฉัน')),
               PopupMenuItem(value: 'โปรไฟล์ผู้สร้าง', child: Text('โปรไฟล์ผู้สร้าง')),
               PopupMenuItem(value: 'About', child: Text('เกี่ยวกับแอป')),
               PopupMenuItem(value: 'Logout', child: Text('ออกจากระบบ')),
@@ -138,18 +140,25 @@ class HomePage extends StatelessWidget {
             final fullName = nameSnapshot.data?.isNotEmpty == true
                 ? nameSnapshot.data!
                 : AuthenticationService.userName;
+            final isLandscape = MediaQuery.sizeOf(context).width > MediaQuery.sizeOf(context).height;
             return Column(
               children: [
-                const SizedBox(height: 14),
+                SizedBox(height: isLandscape ? 4 : 14),
                 Text(
                   'Welcome back',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: isLandscape ? 22 : null,
+                  ),
                 ),
                 Text(
                   'Khun $fullName',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: isLandscape ? 18 : null,
+                  ),
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: isLandscape ? 6 : 24),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
@@ -205,12 +214,55 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 4, 8, 16),
-                  child: Wrap(
-                    spacing: 10,
-                    runSpacing: 14,
-                    alignment: WrapAlignment.center,
-                    children: [
+                  padding: EdgeInsets.fromLTRB(8, 4, 8, isLandscape ? 4 : 16),
+                  child: isLandscape
+                      ? SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              _homeButton(
+                                context,
+                                'งานที่ต้องส่ง',
+                                Icons.assignment_outlined,
+                                () => Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (_) => const HomeworkNotiPage()),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              _homeButton(
+                                context,
+                                'ตึกเรียน',
+                                Icons.business_outlined,
+                                () => Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (_) => const BuildingPage()),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              _homeButton(
+                                context,
+                                'AI ติวเตอร์',
+                                Icons.auto_awesome_outlined,
+                                () => Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (_) => const AIPage()),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              _homeButton(
+                                context,
+                                'ชุมชน',
+                                Icons.people_outline,
+                                () => Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (_) => const CommunityPage()),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Wrap(
+                          spacing: 10,
+                          runSpacing: 14,
+                          alignment: WrapAlignment.center,
+                          children: [
                       _homeButton(
                         context,
                         'งานที่ต้องส่ง',
@@ -243,8 +295,8 @@ class HomePage extends StatelessWidget {
                           MaterialPageRoute(builder: (_) => const CommunityPage()),
                         ),
                       ),
-                    ],
-                  ),
+                          ],
+                        ),
                 ),
               ],
             );

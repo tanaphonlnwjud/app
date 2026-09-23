@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nisit_hub/widgets/responsive_page.dart';
 import 'package:intl/intl.dart';
 
 import '../models/deadline_record.model.dart';
@@ -10,7 +11,7 @@ class HomeworkNotiPage extends StatelessWidget {
 
 	@override
 	Widget build(BuildContext context) {
-		return Scaffold(
+		return ResponsiveScaffold(
 			appBar: AppBar(
 				title: const Text('งานที่ต้องส่ง'),
 				actions: [
@@ -244,7 +245,7 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
 
 	@override
 	Widget build(BuildContext context) {
-		return Scaffold(
+		return ResponsiveScaffold(
 			appBar: AppBar(title: Text(_isEditing ? 'แก้ไขงาน' : 'เพิ่มงานที่ต้องส่ง')),
 			body: Form(
 				key: _formKey,

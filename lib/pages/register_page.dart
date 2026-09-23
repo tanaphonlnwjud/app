@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nisit_hub/widgets/responsive_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/authentication_service.dart';
 import '../widgets/register_form.dart';
@@ -57,8 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFD9D9D9),
+    return ResponsiveScaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFD9D9D9),
         foregroundColor: Colors.black,

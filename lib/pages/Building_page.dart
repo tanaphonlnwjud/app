@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nisit_hub/widgets/responsive_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BuildingInfo {
@@ -104,7 +105,7 @@ class BuildingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ResponsiveScaffold(
       appBar: AppBar(title: const Text('ตึกเรียน')),
       body: GridView.builder(
         padding: const EdgeInsets.all(12),

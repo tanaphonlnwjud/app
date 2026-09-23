@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nisit_hub/widgets/responsive_page.dart';
 import '../services/authentication_service.dart';
 import 'home_page.dart';
 import 'register_page.dart';
@@ -11,7 +12,7 @@ class LoginPage extends StatelessWidget {
     String email = '';
     String password = '';
 
-    return Scaffold(
+    return ResponsiveScaffold(
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(24.0),

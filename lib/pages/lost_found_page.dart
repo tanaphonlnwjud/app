@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:nisit_hub/widgets/responsive_page.dart';
 import 'package:intl/intl.dart';
 
 import '../models/lost_found_post.dart';
@@ -13,7 +14,7 @@ class LostFoundPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final service = LostFoundService();
-    return Scaffold(
+    return ResponsiveScaffold(
       appBar: AppBar(title: const Text('ของหายและพบของ')),
       body: StreamBuilder<List<LostFoundPost>>(
         stream: service.watchPosts(),

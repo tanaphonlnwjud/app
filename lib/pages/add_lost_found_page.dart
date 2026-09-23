@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nisit_hub/widgets/responsive_page.dart';
 
 import '../models/lost_found_post.dart';
 import '../services/lost_found_service.dart';
@@ -64,7 +65,7 @@ class _AddLostFoundPageState extends State<AddLostFoundPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ResponsiveScaffold(
       appBar: AppBar(title: const Text('โพสต์ของหาย / พบของ')),
       body: Form(
         key: _formKey,

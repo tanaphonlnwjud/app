@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nisit_hub/widgets/responsive_page.dart';
 import '../services/authentication_service.dart';
 import '../services/openai_chat_service.dart';
 
@@ -110,7 +111,7 @@ class _AIPageState extends State<AIPage> {
 
 	@override
 	Widget build(BuildContext context) {
-		return Scaffold(
+		return ResponsiveScaffold(
 			appBar: AppBar(
 				title: const Row(
 					children: [
